@@ -1,0 +1,116 @@
+{
+    "info": {
+      "_postman_id": "xyz",
+      "name": "API de envio/recebimento de email com autenticação OAuth 2.0",
+      "description": "API para enviar e receber emails usando autenticação OAuth 2.0 da Microsoft.",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Enviar email",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/x-www-form-urlencoded"
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer {{accessToken}}"
+            }
+          ],
+          "url": {
+            "raw": "{{baseUrl}}/api/send-email",
+            "host": [
+              "{{baseUrl}}"
+            ],
+            "path": [
+              "api",
+              "send-email"
+            ]
+          },
+          "body": {
+            "mode": "urlencoded",
+            "urlencoded": [
+              {
+                "key": "to",
+                "value": "email@example.com",
+                "description": "Endereço de email do destinatário."
+              },
+              {
+                "key": "subject",
+                "value": "Assunto do email",
+                "description": "Assunto do email."
+              },
+              {
+                "key": "body",
+                "value": "<p>Conteúdo do email.</p>",
+                "description": "Conteúdo do email em formato HTML."
+              }
+            ]
+          }
+        },
+        "response": {
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n    \"message\": \"E-mail enviado com sucesso.\"\n}"
+          }
+        }
+      },
+      {
+        "name": "Receber emails",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{accessToken}}"
+            }
+          ],
+          "url": {
+            "raw": "{{baseUrl}}/api/get-emails",
+            "host": [
+              "{{baseUrl}}"
+            ],
+            "path": [
+              "api",
+              "get-emails"
+            ]
+          }
+        },
+        "response": {
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "[\n    {\n        \"subject\": \"Assunto do email\",\n        \"from\": {\n            \"emailAddress\": {\n                \"name\": \"Remetente do email\",\n                \"address\": \"remetente@example.com\"\n            }\n        },\n        \"createdDateTime\": \"2023-04-24T20:35:00.000Z\"\n    }\n]"
+          }
+        }
+      }
+    ],
+    "variable": [
+      {
+        "key": "baseUrl",
+        "value": "http://localhost:3000",
+        "description": "URL base da API."
+      },
+      {
+        "key": "accessToken",
+        "value": "",
+        "description": "Token de acesso OAuth 2.0 da Microsoft."
+      }
+    ]
+}  
